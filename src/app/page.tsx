@@ -1,8 +1,6 @@
 import HelpCard from "@/components/HelpCard";
 import TraitCard from "@/components/TraitCard";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Link from "next/link"; // Import Link from next/link
 import { traitRawData, HelpRawData } from "../raw data/indexPage";
 import teams from "../raw data/teams";
 import TeamCard from "@/components/TeamCard";
@@ -76,7 +74,7 @@ export default function Home() {
           🌟 <br />
           <b className="text-purple-100">
             {" "}
-            Come join us at the PEC Robotics Society and let's build something
+            Come join us at the PEC Robotics Society and let&apos;s build something
             awesome together!{" "}
           </b>
           🤩
