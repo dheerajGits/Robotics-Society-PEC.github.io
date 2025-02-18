@@ -47,6 +47,9 @@ const config: Config = {
         purple: {
           100: "#6157C9"
         },
+        green: {
+          100: "#277500"
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
