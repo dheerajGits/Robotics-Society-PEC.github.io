@@ -1,8 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { formatDistanceToNow } from 'date-fns';
 import { BlogFillerData } from '@/raw data/blog';
+import {timeAgo} from "@/lib/utils";
+
 interface BlogType {
   blog_title:string,
   blog_sub_title:string,
@@ -17,8 +18,7 @@ interface TimeAgoProps {
 }
 
 const TimeAgo: React.FC<TimeAgoProps> = ({ timestamp }) => {
-  const timeAgo = formatDistanceToNow(new Date(timestamp), { addSuffix: true });
-  return <span className='text-gray-400'>{timeAgo}</span>;
+  return <span className='text-gray-400'>{timeAgo(new Date(timestamp))}</span>;
 };
 
 
