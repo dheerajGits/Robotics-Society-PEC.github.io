@@ -7,6 +7,10 @@ import getDbConnection from '@/utils/dbConnect';
 import bcrypt from 'bcryptjs';
 import {validateSignupRequest} from '@/utils/valid';
 
+if (!process.env.BCRYPT_ENCRYPTION_ROUNDS) {
+	throw new Error('BCRYPT_ENCRYPTION_ROUNDS is not defined');
+}
+const BCRYPT_ENCRYPTION_ROUNDS = parseInt(process.env.BCRYPT_ENCRYPTION_ROUNDS);
 export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
@@ -21,7 +25,7 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({message: 'Email already in use'}, {status: 400});
 		}
 
-		const hashedPassword = await bcrypt.hash(password, parseInt(process.env.BCRYPT_ENCRYPTION_ROUNDS || '10'));
+		const hashedPassword = await bcrypt.hash(password, BCRYPT_ENCRYPTION_ROUNDS);
 
 		const newUser = new User({
 			email,
@@ -34,8 +38,9 @@ export async function POST(request: NextRequest) {
 		});
 		await newUser.save();
 
-		return NextResponse.json({message: 'User registered successfully'}, {status: 201});
+		return NextResponse.json({message: 'User registered successfully', ...newUser, password: null}, {status: 201});
 	} catch (error) {
+		console.log(error);
 		return NextResponse.json({message: (error as Error).message}, {status: 400});
 	}
 }
