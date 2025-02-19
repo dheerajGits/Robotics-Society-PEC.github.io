@@ -21,6 +21,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.7",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.451.0",
     "mongoose": "^8.10.1",
     "next": "^15.1.6",
@@ -32,6 +33,7 @@
     "uploadthing": "^7.1.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
