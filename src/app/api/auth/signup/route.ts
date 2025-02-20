@@ -6,15 +6,17 @@ import User from '@/models/User';
 import getDbConnection from '@/utils/dbConnect';
 import bcrypt from 'bcryptjs';
 import {validateSignupRequest} from '@/utils/valid';
+import SignupRequestBody from '@/types/SignupRequestBody';
 
 if (!process.env.BCRYPT_ENCRYPTION_ROUNDS) {
 	throw new Error('BCRYPT_ENCRYPTION_ROUNDS is not defined');
 }
+
 const BCRYPT_ENCRYPTION_ROUNDS = parseInt(process.env.BCRYPT_ENCRYPTION_ROUNDS);
 export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
-		const {email, password, name, ph_number, sid, batch, branch} = body;
+		const {email, password, name, ph_number, sid, batch, branch}:SignupRequestBody = body;
 
 		// Validate request
 		validateSignupRequest(body);

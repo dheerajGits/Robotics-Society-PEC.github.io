@@ -3,7 +3,7 @@
 import mongoose, {Document, Schema} from 'mongoose';
 
 // Define the Branch enum
-enum Branch {
+export enum Branch {
 	CSE = 'CSE',
 	CIVIL = 'CIVIL',
 	AERO = 'AERO',

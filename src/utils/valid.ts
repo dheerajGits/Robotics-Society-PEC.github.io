@@ -1,6 +1,6 @@
 /** @format */
 
-import {SignupRequestBody} from '@/app/api/auth/signup/signup';
+import SignupRequestBody from '@/types/SignupRequestBody';
 import {ValidationError} from '@/exceptions/ValidationError';
 
 export const validateSignupRequest = (body: SignupRequestBody): void => {
