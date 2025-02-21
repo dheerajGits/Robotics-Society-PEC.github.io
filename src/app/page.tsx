@@ -6,15 +6,15 @@ import Link from "next/link"; // Import Link from next/link
 import { traitRawData, HelpRawData } from "../raw data/indexPage";
 import teams from "../raw data/teams";
 import TeamCard from "@/components/TeamCard";
-import WinBoxComponent from "@/components/winboxComponent";
+import Winbox from "@/components/winbox";
 
 
 export default function Home() {
+  const about=<div><p>hello</p></div>
   return (
-    <main>
+    <main>  
     <h1>Welcome to My Next.js App</h1>
-    <WinBoxComponent />
-</main>
+    </main>
     // <main className="flex flex-col items-center justify-center min-h-screen font-alata text-white w-full gap-20 mb-10">
     //   <div className="flex flex-row items-center justify-between px-10 ">
     //     <div className="absolute inset-0 flex items-center justify-center -z-10">
