@@ -16,25 +16,38 @@ interface WinBoxComponentProps {
     y?: string;
     buttonX?: string;
     buttonY?: string;
+    openByDefault?: boolean;
 }
 
 export default function WinBoxComponent({
     title,
     mount,
-    x = "10%",
+    x = "60%",
     y = "10%",
-    buttonX = "10%",
-    buttonY = "10%"
+    buttonX,
+    buttonY,
+    openByDefault = false
 }: WinBoxComponentProps) {
     const winboxRef = useRef<any>(null);
 
     useEffect(() => {
-        if (!window.WinBox) {
-            const script = document.createElement("script");
-            script.src = "/winbox/winbox.bundle.min.js";
-            script.async = true;
-            document.body.appendChild(script);
-        }
+        const loadWinBox = () => {
+            if (!window.WinBox) {
+                const script = document.createElement("script");
+                script.src = "/winbox/winbox.bundle.min.js";
+                script.async = true;
+                script.onload = () => {
+                    if (openByDefault) {
+                        openWinBox();
+                    }
+                };
+                document.body.appendChild(script);
+            } else if (openByDefault) {
+                openWinBox();
+            }
+        };
+
+        loadWinBox();
 
         const style = document.createElement("style");
         style.innerHTML = `
@@ -43,9 +56,11 @@ export default function WinBoxComponent({
             }
         `;
         document.head.appendChild(style);
-    }, []);
+    }, [openByDefault]);
 
     const openWinBox = () => {
+        if (!window.WinBox) return;
+
         if (winboxRef.current) {
             winboxRef.current.focus();
             return;
@@ -76,10 +91,12 @@ export default function WinBoxComponent({
 
     return (
         <Draggable initialX={buttonX} initialY={buttonY}>
-            <button onClick={openWinBox} style={{ position: "absolute", left: buttonX, top: buttonY }}>
-                <img src={`/icons/${title}.svg`} className="h-200 w-200" />
-                <p>{title}</p>
-            </button>
+            <div style={{ width: '128px', height: '128px'}}>
+                <button onClick={openWinBox} style={{ position: "absolute", color: "#C0C1C0", left: buttonX, top: buttonY }}>
+                    <img src={`/icons/${title}.png`} style={{ height: '78px', width: '78px' }} />
+                    <p className="whitespace-nowrap">{title}</p>
+                </button>
+            </div>
         </Draggable>
     );
 }
