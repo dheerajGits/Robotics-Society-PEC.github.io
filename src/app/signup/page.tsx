@@ -3,11 +3,10 @@
 'use client';
 
 import {useAuth} from '@/contexts/auth/AuthContext';
+import {Branch} from '@/models/User';
 import Image from 'next/image';
 import SelectFormField, {SelectFormFieldProps} from '../../components/SelectFormField';
 import TextFormField, {TextFormFieldProps} from '../../components/TextFormField';
-import {Branch} from '@/models/User';
-
 
 export default function SignupPage() {
 	const {signupData, setSignupData, signupError, handleSignup} = useAuth();
@@ -29,7 +28,7 @@ export default function SignupPage() {
 			emoji: '📅',
 			className: 'w-1/2',
 			value: signupData.batch,
-			onChange: (value:string) => setSignupData({batch: Number(value)}),
+			onChange: (value: string) => setSignupData({batch: Number(value)}),
 		},
 	] as const;
 
@@ -78,6 +77,15 @@ export default function SignupPage() {
 			autoComplete: 'new-password',
 			value: signupData.password,
 			onChange: value => setSignupData({password: value}),
+		},
+		{
+			type: 'password' as const,
+			label: 'Confirm Password',
+			placeholder: 'confirm password',
+			emoji: '🔐',
+			autoComplete: 'new-password',
+			value: signupData.confirmPassword,
+			onChange: value => setSignupData({confirmPassword: value}),
 		},
 	] as const;
 	return (

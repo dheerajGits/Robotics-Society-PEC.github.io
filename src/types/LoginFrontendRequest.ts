@@ -1,6 +1,6 @@
 /** @format */
 
-export default interface LoginRequestBody {
+export default interface LoginFrontendRequest {
 	email: string;
 	password: string;
 }

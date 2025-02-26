@@ -1,7 +1,7 @@
 /** @format */
 
-import LoginRequestBody from "@/types/LoginRequestBody";
-import SignupRequestBody from "@/types/SignupRequestBody";
+import LoginRequestBody from '@/types/LoginFrontendRequest';
+import SignupFrontendRequest from '@/types/SignupFrontendRequest';
 
 export interface AuthContextType {
 	loginData: LoginRequestBody;
@@ -10,8 +10,8 @@ export interface AuthContextType {
 	setLoginError: (error: string) => void;
 	handleLogin: (e: React.FormEvent) => Promise<void>;
 
-	signupData: SignupRequestBody;
-	setSignupData: (data: Partial<SignupRequestBody>) => void;
+	signupData: SignupFrontendRequest;
+	setSignupData: (data: Partial<SignupFrontendRequest>) => void;
 	signupError: string;
 	setSignupError: (error: string) => void;
 	handleSignup: (e: React.FormEvent) => Promise<void>;

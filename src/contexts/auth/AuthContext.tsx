@@ -3,8 +3,8 @@
 'use client';
 
 import {Branch} from '@/models/User';
-import LoginRequestBody from '@/types/LoginRequestBody';
-import SignupRequestBody from '@/types/SignupRequestBody';
+import LoginRequestBody from '@/types/LoginFrontendRequest';
+import SignupFrontendRequest from '@/types/SignupFrontendRequest';
 import {useRouter} from 'next/navigation';
 import {createContext, useCallback, useContext, useMemo, useState} from 'react';
 import {AuthContextType} from './AuthTypes';
@@ -14,7 +14,7 @@ const initialLoginData: LoginRequestBody = {
 	password: '',
 };
 
-const initialSignupData: SignupRequestBody = {
+const initialSignupData: SignupFrontendRequest = {
 	name: '',
 	email: '',
 	ph_number: 0,
@@ -22,6 +22,7 @@ const initialSignupData: SignupRequestBody = {
 	password: '',
 	batch: 0,
 	branch: 'CSE' as Branch,
+	confirmPassword: '',
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,10 +33,10 @@ export function AuthProvider({children}: Readonly<{children: React.ReactNode}>) 
 	const [loginData, setLoginData] = useState<LoginRequestBody>(initialLoginData);
 	const [loginError, setLoginError] = useState('');
 
-	const [signupData, setSignupData] = useState<SignupRequestBody>(initialSignupData);
+	const [signupData, setSignupData] = useState<SignupFrontendRequest>(initialSignupData);
 	const [signupError, setSignupError] = useState('');
 
-	const setSignupDataCallback = useCallback((data: Partial<SignupRequestBody>) => {
+	const setSignupDataCallback = useCallback((data: Partial<SignupFrontendRequest>) => {
 		setSignupData(prev => ({...prev, ...data}));
 	}, []);
 
@@ -72,6 +73,12 @@ export function AuthProvider({children}: Readonly<{children: React.ReactNode}>) 
 	const handleSignup = useCallback(
 		async (e: React.FormEvent) => {
 			e.preventDefault();
+			const {batch,branch,password,ph_number,sid,name,email,confirmPassword} = signupData;
+
+			if (password !== confirmPassword) {
+				setSignupError('Passwords do not match');
+				return;
+			}
 
 			try {
 				console.log('Submitting signup data:', signupData);
@@ -80,7 +87,7 @@ export function AuthProvider({children}: Readonly<{children: React.ReactNode}>) 
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify(signupData),
+					body: JSON.stringify({batch,branch,password,ph_number,sid,name,email}),
 				});
 
 				const data = await response.json();
